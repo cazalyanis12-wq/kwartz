@@ -1,72 +1,831 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À toi de noter ! - Le Jeu</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts pour un look moderne -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Devinez la note secrète de films, séries, albums, jeux vidéo et plats populaires."
+  >
+  <title>Note secrète</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎯 À toi de noter !</h1>
-            <p class="subtitle">Devine la note secrète (de 1 à 10) basée sur de vraies références culturelles.</p>
-        </header>
+  <div class="background-decoration decoration-one"></div>
+  <div class="background-decoration decoration-two"></div>
 
-        <!-- Barre de contrôle / Choix de catégorie -->
-        <div class="control-panel">
-            <div class="select-group">
-                <label for="category-select">Catégorie :</label>
-                <select id="category-select">
-                    <option value="random">🎲 Aléatoire à chaque manche</option>
-                    <option value="films">🎬 Films & Séries</option>
-                    <option value="musique">🎵 Musique & Chansons</option>
-                    <option value="jeux">🎮 Jeux Vidéo</option>
-                    <option value="nourriture">🍔 Nourriture & Snacks</option>
-                </select>
-            </div>
-            <button id="new-game-btn" class="btn-secondary">🔄 Nouvelle manche</button>
+  <main class="app">
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-icon">★</div>
+
+        <div>
+          <p class="brand-kicker">Jeu de devinettes</p>
+          <h1>Note secrète</h1>
+        </div>
+      </div>
+
+      <p class="header-description">
+        Observez les indices, puis essayez de deviner la note cachée.
+      </p>
+    </header>
+
+    <!-- Écran de sélection de catégorie -->
+    <section id="categoryScreen" class="screen category-screen">
+      <div class="screen-heading">
+        <p class="eyebrow">Avant de commencer</p>
+        <h2>Quelle catégorie veux-tu jouer ?</h2>
+        <p>
+          Choisis un univers, puis découvre plusieurs éléments correspondant
+          tous à la même note secrète.
+
+        <span>✦</span>
+        Catégorie aléatoire
+      </button>
+    </section>
+
+    <!-- Écran de jeu -->
+    <section id="gameScreen" class="screen game-screen" hidden>
+      <div class="game-topbar">
+        <button id="changeCategoryButton" class="text-button" type="button">
+          ← Changer de catégorie
+        </button>
+
+        <div class="round-badge">
+          Manche <strong id="roundNumber">1</strong>
+        </div>
+      </div>
+
+      <div class="category-heading">
+        <div>
+          <p class="eyebrow">Catégorie sélectionnée</p>
+          <h2 id="categoryName">Films</h2>
+          <p id="categorySource" class="category-source"></p>
         </div>
 
-        <!-- Zone principale du jeu -->
-        <main class="game-card">
-            <div class="game-header">
-                <span id="category-badge" class="badge">Films & Séries</span>
-                <span id="round-info">Manche en cours</span>
-            </div>
+        <div id="categoryIcon" class="large-category-icon">🎬</div>
+      </div>
 
-            <div class="clues-section">
-                <h2>Que vaut cette sélection ?</h2>
-                <p class="instruction-clue">Voici les indices disponibles. Demande-en plus si tu hésites !</p>
-                
-                <ul id="clues-list" class="clues-list">
-                    <!-- Les indices s'injecteront ici -->
-                </ul>
+      <div class="secret-note">
+        <span class="secret-note-dot"></span>
+        Une seule note secrète se cache derrière tous les indices
+      </div>
 
-                <button id="more-clue-btn" class="btn-accent">➕ Obtenir un indice supplémentaire</button>
-            </div>
+      <div class="hints-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Les indices</p>
+            <h3>À quelle note correspondent-ils ?</h3>
+          </div>
 
-            <!-- Zone de réponse -->
-            <div class="guess-section">
-                <label for="score-range">Quelle est la note secrète ? (<span id="range-val">5</span>/10)</label>
-                <div class="range-container">
-                    <span>1</span>
-                    <input type="range" id="score-range" min="1" max="10" value="5">
-                    <span>10</span>
-                </div>
-                <button id="validate-btn" class="btn-primary">Valider ma réponse</button>
-            </div>
+          <span id="hintCounter" class="hint-counter"></span>
+        </div>
 
-            <!-- Résultat (caché au début) -->
-            <div id="result-container" class="result-container hidden">
-                <div id="result-message"></div>
-                <button id="next-round-btn" class="btn-primary">Manche suivante ➔</button>
-            </div>
-        </main>
-    </div>
+        <ol id="hintsList" class="hints-list" aria-live="polite"></ol>
 
-    <script src="script.js"></script>
+        <button id="hintButton" class="secondary-button" type="button">
+          <span>＋</span>
+          Obtenir un indice supplémentaire
+        </button>
+      </div>
+
+      <div class="guess-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">À ton tour</p>
+            <h3>Quelle est la note secrète ?</h3>
+          </div>
+
+          <span class="scale-label">De 1 à 10</span>
+        </div>
+
+        <div class="guess-controls">
+          <select id="guessSelect" aria-label="Choisir une note entre 1 et 10">
+            <option value="">Choisir une note</option>
+            <option value="1">1 / 10</option>
+            <option value="2">2 / 10</option>
+            <option value="3">3 / 10</option>
+            <option value="4">4 / 10</option>
+            <option value="5">5 / 10</option>
+            <option value="6">6 / 10</option>
+            <option value="7">7 / 10</option>
+            <option value="8">8 / 10</option>
+            <option value="9">9 / 10</option>
+            <option value="10">10 / 10</option>
+          </select>
+
+          <button id="validateButton" class="primary-button" type="button">
+            Valider ma réponse
+          </button>
+        </div>
+      </div>
+
+      <section id="resultPanel" class="result-panel" hidden aria-live="assertive">
+        <div class="result-icon">✓</div>
+
+        <div>
+          <p class="eyebrow">Résultat de la manche</p>
+          <h3 id="resultTitle"></h3>
+          <p id="resultText"></p>
+          <strong id="errorMargin" class="error-margin"></strong>
+        </div>
+      </section>
+
+      <button id="nextRoundButton" class="next-round-button" type="button" hidden>
+        Manche suivante
+        <span>→</span>
+      </button>
+    </section>
+
+    <footer class="site-footer">
+      <p>
+        Les notes sont des paliers de jeu inspirés de notes publiques.
+        Elles ne sont pas récupérées automatiquement.
+      </p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
+---
+style.css
+
+:root {
+  --background: #101322;
+  --background-light: #171b2e;
+  --surface: rgba(28, 33, 55, 0.88);
+  --surface-light: rgba(38, 44, 71, 0.88);
+  --surface-soft: rgba(255, 255, 255, 0.055);
+
+  --text: #f6f7fb;
+  --muted: #a4abc2;
+  --muted-light: #c8ccda;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --primary: #8c7cff;
+  --primary-dark: #6f5eee;
+  --secondary: #252b4a;
+  --accent: #f5b85d;
+  --success: #52d3a4;
+
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
+  --radius-large: 28px;
+  --radius-medium: 18px;
+  --radius-small: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--background);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--text);
+  background:
+    linear-gradient(135deg, #101322 0%, #15182a 50%, #111525 100%);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Éléments décoratifs */
+
+.background-decoration {
+  position: fixed;
+  z-index: -1;
+  width: 420px;
+  height: 420px;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+}
+
+.decoration-one {
+  top: -180px;
+  left: -140px;
+  background: #725cff;
+}
+
+.decoration-two {
+  right: -180px;
+  bottom: -160px;
+  background: #d77bff;
+}
+
+/* Structure générale */
+
+.app {
+  width: min(100% - 36px, 920px);
+  margin: 0 auto;
+  padding: 42px 0 30px;
+}
+
+.site-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 34px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  color: #1c1831;
+  back
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(245, 184, 93, 0.2);
+  font-size: 1.8rem;
+}
+
+.brand-kicker,
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.brand h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.7rem, 4vw, 2.25rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.header-description {
+  max-width: 280px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-align: right;
+}
+
+/* Cartes principales */
+
+.screen {
+  padding: clamp(24px, 5vw, 48px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.screen-heading {
+  max-width: 620px;
+  margin-bottom: 34px;
+}
+
+.screen-heading h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.screen-heading > p:last-child {
+  max-width: 560px;
+  margin: 14px 0 0;
+  color: var(--muted);
+}
+
+/* Sélection des catégories */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 118px;
+  padding: 20px;
+  color: var(--text);
+  text-align: left;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  background: var(--surface-light);
+  border-color: rgba(140, 124, 255, 0.65);
+}
+
+.category-card-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  background: rgba(140, 124, 255, 0.15);
+  border-radius: 17px;
+  font-size: 1.85rem;
+}
+
+.category-card-content {
+  min-width: 0;
+}
+
+.category-card-title {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.category-card-description {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.random-category-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 18px;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid rgba(245, 184, 93, 0.35);
+  border-radius: var(--radius-small);
+  font-weight: 800;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.random-category-button:hover {
+  background: rgba(245, 184, 93, 0.08);
+  border-color: rgba(245, 184, 93, 0.7);
+}
+
+.random-category-button span {
+  font-size: 1.25rem;
+}
+
+/* Écran de jeu */
+
+.game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.text-button {
+  padding: 0;
+  color: var(--muted-light);
+  background: transparent;
+  border: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.text-button:hover {
+  color: var(--text);
+}
+
+.round-badge {
+  padding: 8px 13px;
+  color: var(--muted-light);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.78rem;
+}
+
+.round-badge strong {
+  margin-left: 4px;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.category-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.category-source {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.large-category-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 82px;
+  height: 82px;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    rgba(140, 124, 255, 0.25),
+    rgba(245, 184, 93, 0.16)
+  );
+  border: 1px solid rgba(140, 124, 255, 0.22);
+  border-radius: 24px;
+  font-size: 2.5rem;
+}
+
+.secret-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 24px 0 0;
+  color: var(--muted-light);
+  font-size: 0.84rem;
+}
+
+.secret-note-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(82, 211, 164, 0.12);
+}
+
+/* Indices */
+
+.hints-section,
+.guess-section {
+  padding-top: 34px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 17px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.025em;
+}
+
+.hint-counter,
+.scale-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.hints-list {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  counter-reset: hints;
+}
+
+.hint {
+  position: relative;
+  padding: 18px 18px 18px 62px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  counter-increment: hints;
+  animation: appear 300ms ease both;
+}
+
+.hint::before {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #19162d;
+  background: var(--accent);
+  border-radius: 50%;
+  content: counter(hints);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.hint-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.hint-description {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.secondary-button,
+.primary-button,
+.next-round-button {
+  min-height: 50px;
+  padding: 0 20px;
+  border-radius: var(--radius-small);
+  font-weight: 800;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  color: var(--primary);
+  background: rgba(140, 124, 255, 0.12);
+  border: 1px solid rgba(140, 124, 255, 0.2);
+}
+
+.secondary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(140, 124, 255, 0.2);
+}
+
+.secondary-button span {
+  font-size: 1.25rem;
+}
+
+/* Choix de note */
+
+.guess-controls {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.8fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  color: var(--text);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  outline: none;
+}
+
+select:focus,
+button:focus-visible {
+  outline: 3px solid rgba(140, 124, 255, 0.3);
+  outline-offset: 3px;
+}
+
+/* Choix de note */
+
+.guess-controls {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.8fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  color: var(--text);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  outline: none;
+}
+
+select:focus,
+button:focus-visible {
+  outline: 3px solid rgba(140, 124, 255, 0.3);
+  outline-offset: 3px;
+}
+
+.primary-button {
+  color: #171329;
+  background: linear-gradient(135deg, #a89dff, #8273fa);
+  border: 0;
+  box-shadow: 0 12px 25px rgba(140, 124, 255, 0.2);
+}
+
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #b6adff, #9285ff);
+}
+
+/* Résultat */
+
+.result-panel {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(82, 211, 164, 0.08);
+  border: 1px solid rgba(82, 211, 164, 0.28);
+  border-radius: var(--radius-medium);
+  animation: appear 300ms ease both;
+}
+
+.result-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  color: #15251e;
+  background: var(--success);
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+.result-panel h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.result-panel p:not(.eyebrow) {
+  margin: 5px 0 0;
+  color: var(--muted-light);
+}
+
+.error-margin {
+  display: block;
+  margin-top: 13px;
+  color: var(--accent);
+}
+
+.next-round-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 18px;
+  color: #171329;
+  background: var(--accent);
+  border: 0;
+}
+
+.next-round-button:hover {
+  transform: translateY(-2px);
+  background: #ffd17a;
+}
+
+.next-round-button span {
+  font-size: 1.2rem;
+}
+
+/* Pied de page */
+
+.site-footer {
+  padding: 22px 10px 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-align: center;
+}
+
+/* Animations */
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 650px) {
+  .app {
+    width: min(100% - 22px, 920px);
+    padding-top: 24px;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .header-description {
+    max-width: 430px;
+    text-align: left;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-heading {
+    align-items: flex-start;
+  }
+
+  .large-category-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 19px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .screen {
+    padding: 22px 18px;
+    border-radius: 22px;
+  }
+
+  .category-heading h2 {
+    font-size: 2.3rem;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hint-counter,
+  .scale-label {
+    text-align: left;
+  }
+
+  .guess-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .result-panel {
+    flex-direction: column;
+  }
+}
