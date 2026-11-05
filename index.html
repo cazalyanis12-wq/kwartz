@@ -3,17 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta
-    name="description"
-    content="Devinez la note secrète de films, séries, albums, jeux vidéo et plats populaires."
-  >
   <title>Note secrète</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background-decoration decoration-one"></div>
-  <div class="background-decoration decoration-two"></div>
-
   <main class="app">
     <header class="site-header">
       <div class="brand">
@@ -26,26 +19,27 @@
       </div>
 
       <p class="header-description">
-        Observez les indices, puis essayez de deviner la note cachée.
+        Observe les indices et devine la note cachée.
       </p>
     </header>
 
-    <!-- Écran de sélection de catégorie -->
     <section id="categoryScreen" class="screen category-screen">
       <div class="screen-heading">
         <p class="eyebrow">Avant de commencer</p>
-        <h2>Quelle catégorie veux-tu jouer ?</h2>
+        <h2>Choisis une catégorie</h2>
         <p>
-          Choisis un univers, puis découvre plusieurs éléments correspondant
-          tous à la même note secrète.
+          Sélectionne l'univers dans lequel tu veux jouer.
+        </p>
+      </div>
 
-        <span>✦</span>
-        Catégorie aléatoire
+      <div id="categoryGrid" class="category-grid"></div>
+
+      <button id="randomCategoryButton" class="random-category-button" type="button">
+        ✦ Catégorie aléatoire
       </button>
     </section>
 
-    <!-- Écran de jeu -->
-    <section id="gameScreen" class="screen game-screen" hidden>
+
       <div class="game-topbar">
         <button id="changeCategoryButton" class="text-button" type="button">
           ← Changer de catégorie
@@ -59,16 +53,16 @@
       <div class="category-heading">
         <div>
           <p class="eyebrow">Catégorie sélectionnée</p>
-          <h2 id="categoryName">Films</h2>
+          <h2 id="categoryName"></h2>
           <p id="categorySource" class="category-source"></p>
         </div>
 
-        <div id="categoryIcon" class="large-category-icon">🎬</div>
+        <div id="categoryIcon" class="large-category-icon"></div>
       </div>
 
       <div class="secret-note">
         <span class="secret-note-dot"></span>
-        Une seule note secrète se cache derrière tous les indices
+        Tous les indices correspondent à la même note secrète.
       </div>
 
       <div class="hints-section">
@@ -81,11 +75,10 @@
           <span id="hintCounter" class="hint-counter"></span>
         </div>
 
-        <ol id="hintsList" class="hints-list" aria-live="polite"></ol>
+        <ol id="hintsList" class="hints-list"></ol>
 
         <button id="hintButton" class="secondary-button" type="button">
-          <span>＋</span>
-          Obtenir un indice supplémentaire
+          ＋ Obtenir un indice supplémentaire
         </button>
       </div>
 
@@ -100,7 +93,7 @@
         </div>
 
         <div class="guess-controls">
-          <select id="guessSelect" aria-label="Choisir une note entre 1 et 10">
+          <select id="guessSelect">
             <option value="">Choisir une note</option>
             <option value="1">1 / 10</option>
             <option value="2">2 / 10</option>
@@ -120,11 +113,11 @@
         </div>
       </div>
 
-      <section id="resultPanel" class="result-panel" hidden aria-live="assertive">
+      <section id="resultPanel" class="result-panel" hidden>
         <div class="result-icon">✓</div>
 
         <div>
-          <p class="eyebrow">Résultat de la manche</p>
+          <p class="eyebrow">Résultat</p>
           <h3 id="resultTitle"></h3>
           <p id="resultText"></p>
           <strong id="errorMargin" class="error-margin"></strong>
@@ -132,15 +125,13 @@
       </section>
 
       <button id="nextRoundButton" class="next-round-button" type="button" hidden>
-        Manche suivante
-        <span>→</span>
+        Manche suivante →
       </button>
     </section>
 
     <footer class="site-footer">
       <p>
         Les notes sont des paliers de jeu inspirés de notes publiques.
-        Elles ne sont pas récupérées automatiquement.
       </p>
     </footer>
   </main>
@@ -148,7 +139,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-  .result-panel {
-    flex-direction: column;
-  }
-}
