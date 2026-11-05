@@ -1,116 +1,72 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Un jeu de devinettes autour des notes de films, séries, jeux vidéo, albums et plats.">
-  <title>À toi de noter</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À toi de noter ! - Le Jeu</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts pour un look moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main class="app">
-    <header class="hero">
-      <p class="eyebrow">Jeu de devinettes</p>
-      <h1>À toi de noter</h1>
-      <p class="intro">
-        Découvre des exemples et devine la note secrète de la manche,
-        de 1 à 10.
-      </p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🎯 À toi de noter !</h1>
+            <p class="subtitle">Devine la note secrète (de 1 à 10) basée sur de vraies références culturelles.</p>
+        </header>
 
-    <section class="game-card" aria-labelledby="round-title">
-      <div class="round-header">
-        <div>
-          <p class="label">Catégorie</p>
-          <h2 id="categoryName">Chargement...</h2>
-          <p id="categorySource" class="source"></p>
+        <!-- Barre de contrôle / Choix de catégorie -->
+        <div class="control-panel">
+            <div class="select-group">
+                <label for="category-select">Catégorie :</label>
+                <select id="category-select">
+                    <option value="random">🎲 Aléatoire à chaque manche</option>
+                    <option value="films">🎬 Films & Séries</option>
+                    <option value="musique">🎵 Musique & Chansons</option>
+                    <option value="jeux">🎮 Jeux Vidéo</option>
+                    <option value="nourriture">🍔 Nourriture & Snacks</option>
+                </select>
+            </div>
+            <button id="new-game-btn" class="btn-secondary">🔄 Nouvelle manche</button>
         </div>
 
-        <div class="round-number" aria-label="Manche en cours">
-          <span>Manche</span>
-          <strong id="roundNumber">1</strong>
-        </div>
-      </div>
+        <!-- Zone principale du jeu -->
+        <main class="game-card">
+            <div class="game-header">
+                <span id="category-badge" class="badge">Films & Séries</span>
+                <span id="round-info">Manche en cours</span>
+            </div>
 
-      <div class="hint-area">
-        <div class="section-heading">
-          <div>
-            <p class="label">Indices</p>
-            <h2 id="round-title">Que vaut cette sélection ?</h2>
-          </div>
-          <span id="hintCounter" class="hint-counter"></span>
-        </div>
+            <div class="clues-section">
+                <h2>Que vaut cette sélection ?</h2>
+                <p class="instruction-clue">Voici les indices disponibles. Demande-en plus si tu hésites !</p>
+                
+                <ul id="clues-list" class="clues-list">
+                    <!-- Les indices s'injecteront ici -->
+                </ul>
 
-        <ol id="hintsList" class="hints-list" aria-live="polite"></ol>
+                <button id="more-clue-btn" class="btn-accent">➕ Obtenir un indice supplémentaire</button>
+            </div>
 
-        <button id="hintButton" class="button button-secondary" type="button">
-          Obtenir un indice supplémentaire
-        </button>
-      </div>
+            <!-- Zone de réponse -->
+            <div class="guess-section">
+                <label for="score-range">Quelle est la note secrète ? (<span id="range-val">5</span>/10)</label>
+                <div class="range-container">
+                    <span>1</span>
+                    <input type="range" id="score-range" min="1" max="10" value="5">
+                    <span>10</span>
+                </div>
+                <button id="validate-btn" class="btn-primary">Valider ma réponse</button>
+            </div>
 
-      <div class="guess-area">
-        <label for="guessSelect">Quelle est la note secrète ?</label>
+            <!-- Résultat (caché au début) -->
+            <div id="result-container" class="result-container hidden">
+                <div id="result-message"></div>
+                <button id="next-round-btn" class="btn-primary">Manche suivante ➔</button>
+            </div>
+        </main>
+    </div>
 
-        <div class="guess-controls">
-          <select id="guessSelect" aria-label="Choisir une note de 1 à 10">
-            <option value="">Choisir une note</option>
-            <option value="1">1 / 10</option>
-            <option value="2">2 / 10</option>
-            <option value="3">3 / 10</option>
-            <option value="4">4 / 10</option>
-            <option value="5">5 / 10</option>
-            <option value="6">6 / 10</option>
-            <option value="7">7 / 10</option>
-            <option value="8">8 / 10</option>
-            <option value="9">9 / 10</option>
-            <option value="10">10 / 10</option>
-          </select>
-
-          <button id="validateButton" class="button button-primary" type="button">
-            Valider
-          </button>
-        </div>
-      </div>
-
-      <section id="resultPanel" class="result-panel" hidden aria-live="assertive">
-        <p class="label">Résultat</p>
-        <h2 id="resultTitle"></h2>
-        <p id="resultText"></p>
-        <p id="errorMargin" class="error-margin"></p>
-      </section>
-
-      <button id="nextRoundButton" class="button button-next" type="button" hidden>
-        Manche suivante
-      </button>
-    </section>
-
-    <footer class="footer">
-      <p>
-        Les notes sont des paliers indicatifs inspirés de bases publiques.
-        Elles servent uniquement au jeu et ne sont pas actualisées automatiquement.
-      </p>
-    </footer>
-
-      <section id="resultPanel" class="result-panel" hidden aria-live="assertive">
-        <p class="label">Résultat</p>
-        <h2 id="resultTitle"></h2>
-        <p id="resultText"></p>
-        <p id="errorMargin" class="error-margin"></p>
-      </section>
-
-      <button id="nextRoundButton" class="button button-next" type="button" hidden>
-        Manche suivante
-      </button>
-    </section>
-
-    <footer class="footer">
-      <p>
-        Les notes sont des paliers indicatifs inspirés de bases publiques.
-        Elles servent uniquement au jeu et ne sont pas actualisées automatiquement.
-      </p>
-    </footer>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
