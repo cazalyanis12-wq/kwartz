@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note secrète</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="site-header">
+      <div class="brand">
+        <div class="brand-icon">★</div>
+
+        <div>
+          <p class="brand-kicker">Jeu de devinettes</p>
+          <h1>Note secrète</h1>
+        </div>
+      </div>
+
+      <p class="header-description">
+        Observe les indices et devine la note cachée.
+      </p>
+    </header>
+
+    <section id="categoryScreen" class="screen category-screen">
+      <div class="screen-heading">
+        <p class="eyebrow">Avant de commencer</p>
+        <h2>Choisis une catégorie</h2>
+        <p>
+          Sélectionne l'univers dans lequel tu veux jouer.
+        </p>
+      </div>
+
+      <div id="categoryGrid" class="category-grid"></div>
+
+      <button id="randomCategoryButton" class="random-category-button" type="button">
+        ✦ Catégorie aléatoire
+      </button>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen" hidden>
+      <div class="game-topbar">
+        <button id="changeCategoryButton" class="text-button" type="button">
+          ← Changer de catégorie
+        </button>
+
+        <div class="round-badge">
+          Manche <strong id="roundNumber">1</strong>
+        </div>
+      </div>
+
+      <div class="category-heading">
+        <div>
+          <p class="eyebrow">Catégorie sélectionnée</p>
+          <h2 id="categoryName"></h2>
+          <p id="categorySource" class="category-source"></p>
+        </div>
+
+        <div id="categoryIcon" class="large-category-icon"></div>
+      </div>
+
+      <div class="secret-note">
+        <span class="secret-note-dot"></span>
+        Tous les indices correspondent à la même note secrète.
+      </div>
+
+      <div class="hints-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Les indices</p>
+            <h3>À quelle note correspondent-ils ?</h3>
+          </div>
+
+          <span id="hintCounter" class="hint-counter"></span>
+        </div>
+
+        <ol id="hintsList" class="hints-list"></ol>
+
+        <button id="hintButton" class="secondary-button" type="button">
+          ＋ Obtenir un indice supplémentaire
+        </button>
+      </div>
+
+      <div class="guess-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">À ton tour</p>
+            <h3>Quelle est la note secrète ?</h3>
+          </div>
+
+          <span class="scale-label">De 1 à 10</span>
+        </div>
+
+        <div class="guess-controls">
+          <select id="guessSelect">
+            <option value="">Choisir une note</option>
+            <option value="1">1 / 10</option>
+            <option value="2">2 / 10</option>
+            <option value="3">3 / 10</option>
+            <option value="4">4 / 10</option>
+            <option value="5">5 / 10</option>
+            <option value="6">6 / 10</option>
+            <option value="7">7 / 10</option>
+            <option value="8">8 / 10</option>
+            <option value="9">9 / 10</option>
+            <option value="10">10 / 10</option>
+          </select>
+
+          <button id="validateButton" class="primary-button" type="button">
+            Valider ma réponse
+          </button>
+        </div>
+      </div>
+
+      <section id="resultPanel" class="result-panel" hidden>
+        <div class="result-icon">✓</div>
+
+        <div>
+          <p class="eyebrow">Résultat</p>
+          <h3 id="resultTitle"></h3>
+          <p id="resultText"></p>
+          <strong id="errorMargin" class="error-margin"></strong>
+        </div>
+      </section>
+
+      <button id="nextRoundButton" class="next-round-button" type="button" hidden>
+        Manche suivante →
+      </button>
+    </section>
+
+    <footer class="site-footer">
+      <p>
+        Les notes sont des paliers de jeu inspirés de notes publiques.
+      </p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
