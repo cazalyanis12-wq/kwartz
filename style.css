@@ -1,25 +1,25 @@
 :root {
-  --background: #101322;
-  --background-light: #171b2e;
-  --surface: rgba(28, 33, 55, 0.88);
-  --surface-light: rgba(38, 44, 71, 0.88);
-  --surface-soft: rgba(255, 255, 255, 0.055);
+  --background: #080b1b;
+  --background-light: #11172d;
+  --surface: rgba(16, 24, 48, 0.94);
+  --surface-light: rgba(26, 39, 70, 0.96);
+  --surface-soft: rgba(92, 116, 171, 0.12);
 
-  --text: #f6f7fb;
-  --muted: #a4abc2;
-  --muted-light: #c8ccda;
+  --text: #f4f4ff;
+  --muted: #a7b3d3;
+  --muted-light: #d3dcf4;
 
-  --border: rgba(255, 255, 255, 0.1);
-  --primary: #8c7cff;
-  --primary-dark: #6f5eee;
-  --secondary: #252b4a;
-  --accent: #f5b85d;
-  --success: #52d3a4;
+  --border: rgba(111, 143, 213, 0.3);
+  --primary: #4df5d2;
+  --primary-dark: #16c9b0;
+  --secondary: #182445;
+  --accent: #ffd166;
+  --success: #82ff7a;
 
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
-  --radius-large: 28px;
-  --radius-medium: 18px;
-  --radius-small: 12px;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+  --radius-large: 18px;
+  --radius-medium: 12px;
+  --radius-small: 8px;
 }
 
 * {
@@ -37,8 +37,14 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: var(--text);
-  background:
-    linear-gradient(135deg, #101322 0%, #15182a 50%, #111525 100%);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse at 15% 5%, rgba(255, 75, 186, 0.2), transparent 34%),
+    radial-gradient(ellipse at 88% 28%, rgba(38, 244, 209, 0.12), transparent 32%),
+    linear-gradient(rgba(111, 143, 213, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111, 143, 213, 0.045) 1px, transparent 1px),
+    linear-gradient(135deg, #080b1b 0%, #10152b 55%, #090d20 100%);
+  background-size: auto, auto, 28px 28px, 28px 28px, auto;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -79,13 +85,13 @@ button:disabled {
 .decoration-one {
   top: -180px;
   left: -140px;
-  background: #725cff;
+  background: #ff4bba;
 }
 
 .decoration-two {
   right: -180px;
   bottom: -160px;
-  background: #d77bff;
+  background: #26f4d1;
 }
 
 /* Structure générale */
@@ -115,17 +121,19 @@ button:disabled {
   width: 52px;
   height: 52px;
   place-items: center;
-  color: #1c1831;
-  background: linear-gradient(135deg, var(--accent), #ffdc8b);
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(245, 184, 93, 0.2);
+  color: #171329;
+  background: linear-gradient(135deg, #ff74c8, var(--accent));
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(255, 75, 186, 0.35);
   font-size: 1.8rem;
 }
 
 .brand-kicker,
 .eyebrow {
   margin: 0 0 5px;
-  color: var(--primary);
+  color: #ff74c8;
+  font-family: "Courier New", monospace;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.13em;
@@ -135,9 +143,12 @@ button:disabled {
 .brand h1 {
   margin: 0;
   color: var(--text);
+  font-family: "Courier New", monospace;
   font-size: clamp(1.7rem, 4vw, 2.25rem);
-  letter-spacing: -0.05em;
+  letter-spacing: 0.01em;
   line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 22px rgba(77, 245, 210, 0.24);
 }
 
 .header-description {
@@ -152,11 +163,11 @@ button:disabled {
 
 .screen {
   padding: clamp(24px, 5vw, 48px);
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background:
+    linear-gradient(145deg, rgba(19, 30, 58, 0.98), rgba(11, 17, 37, 0.97));
+  border: 1px solid rgba(77, 245, 210, 0.35);
   border-radius: var(--radius-large);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow), 0 0 34px rgba(77, 245, 210, 0.08);
 }
 
 .screen-heading {
@@ -167,7 +178,7 @@ button:disabled {
 .screen-heading h2 {
   margin: 0;
   font-size: clamp(1.9rem, 5vw, 3rem);
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   line-height: 1.05;
 }
 
@@ -194,7 +205,7 @@ button:disabled {
   color: var(--text);
   text-align: left;
   background: var(--surface-soft);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(119, 147, 205, 0.35);
   border-radius: var(--radius-medium);
   transition:
     transform 180ms ease,
@@ -203,9 +214,10 @@ button:disabled {
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.01);
   background: var(--surface-light);
-  border-color: rgba(140, 124, 255, 0.65);
+  border-color: var(--primary);
+  box-shadow: 0 0 22px rgba(77, 245, 210, 0.15);
 }
 
 .category-card-icon {
@@ -214,8 +226,9 @@ button:disabled {
   width: 58px;
   height: 58px;
   place-items: center;
-  background: rgba(140, 124, 255, 0.15);
-  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(255, 75, 186, 0.2), rgba(77, 245, 210, 0.16));
+  border: 1px solid rgba(77, 245, 210, 0.18);
+  border-radius: 12px;
   font-size: 1.85rem;
 }
 
@@ -245,7 +258,7 @@ button:disabled {
   margin-top: 18px;
   color: var(--accent);
   background: transparent;
-  border: 1px solid rgba(245, 184, 93, 0.35);
+  border: 1px solid rgba(255, 209, 102, 0.5);
   border-radius: var(--radius-small);
   font-weight: 800;
   transition:
@@ -254,8 +267,9 @@ button:disabled {
 }
 
 .random-category-button:hover {
-  background: rgba(245, 184, 93, 0.08);
-  border-color: rgba(245, 184, 93, 0.7);
+  background: rgba(255, 209, 102, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(255, 209, 102, 0.12);
 }
 
 .random-category-button span {
@@ -290,13 +304,16 @@ button:disabled {
   color: var(--muted-light);
   background: var(--surface-soft);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 8px;
+  font-family: "Courier New", monospace;
+  border-color: rgba(255, 209, 102, 0.35);
   font-size: 0.78rem;
 }
 
 .round-badge strong {
   margin-left: 4px;
   color: var(--accent);
+  text-shadow: 0 0 12px rgba(255, 209, 102, 0.45);
   font-size: 1rem;
 }
 
@@ -312,7 +329,7 @@ button:disabled {
 .category-heading h2 {
   margin: 0;
   font-size: clamp(2rem, 6vw, 3.4rem);
-  letter-spacing: -0.06em;
+  letter-spacing: -0.025em;
   line-height: 1;
 }
 
@@ -330,11 +347,12 @@ button:disabled {
   place-items: center;
   background: linear-gradient(
     135deg,
-    rgba(140, 124, 255, 0.25),
-    rgba(245, 184, 93, 0.16)
+    rgba(255, 75, 186, 0.25),
+    rgba(77, 245, 210, 0.16)
   );
-  border: 1px solid rgba(140, 124, 255, 0.22);
-  border-radius: 24px;
+  border: 1px solid rgba(77, 245, 210, 0.3);
+  border-radius: 14px;
+  box-shadow: 0 0 24px rgba(255, 75, 186, 0.12);
   font-size: 2.5rem;
 }
 
@@ -352,7 +370,7 @@ button:disabled {
   height: 8px;
   background: var(--success);
   border-radius: 50%;
-  box-shadow: 0 0 0 5px rgba(82, 211, 164, 0.12);
+  box-shadow: 0 0 0 5px rgba(130, 255, 122, 0.12), 0 0 12px rgba(130, 255, 122, 0.5);
 }
 
 /* Indices */
@@ -396,7 +414,8 @@ button:disabled {
   position: relative;
   padding: 18px 18px 18px 62px;
   background: var(--surface-soft);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(119, 147, 205, 0.3);
+  border-left: 3px solid var(--primary);
   border-radius: var(--radius-medium);
   counter-increment: hints;
   animation: appear 300ms ease both;
@@ -410,9 +429,9 @@ button:disabled {
   width: 28px;
   height: 28px;
   place-items: center;
-  color: #19162d;
+  color: #10152b;
   background: var(--accent);
-  border-radius: 50%;
+  border-radius: 8px;
   content: counter(hints);
   font-size: 0.82rem;
   font-weight: 900;
@@ -450,13 +469,14 @@ button:disabled {
   gap: 8px;
   width: 100%;
   color: var(--primary);
-  background: rgba(140, 124, 255, 0.12);
-  border: 1px solid rgba(140, 124, 255, 0.2);
+  background: rgba(77, 245, 210, 0.1);
+  border: 1px solid rgba(77, 245, 210, 0.35);
 }
 
 .secondary-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: rgba(140, 124, 255, 0.2);
+  background: rgba(77, 245, 210, 0.18);
+  box-shadow: 0 0 18px rgba(77, 245, 210, 0.12);
 }
 
 .secondary-button span {
@@ -476,7 +496,7 @@ select {
   min-height: 50px;
   padding: 0 14px;
   color: var(--text);
-  background: var(--surface-soft);
+  background-color: #121b35;
   border: 1px solid var(--border);
   border-radius: var(--radius-small);
   outline: none;
@@ -484,20 +504,21 @@ select {
 
 select:focus,
 button:focus-visible {
-  outline: 3px solid rgba(140, 124, 255, 0.3);
+  outline: 3px solid rgba(77, 245, 210, 0.45);
   outline-offset: 3px;
 }
 
 .primary-button {
-  color: #171329;
-  background: linear-gradient(135deg, #a89dff, #8273fa);
+  color: #07151a;
+  background: linear-gradient(135deg, #6bffe0, #35d7cc);
   border: 0;
-  box-shadow: 0 12px 25px rgba(140, 124, 255, 0.2);
+  box-shadow: 0 8px 0 #168d8a, 0 12px 25px rgba(77, 245, 210, 0.2);
 }
 
 .primary-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #b6adff, #9285ff);
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #8affeb, #5de7dd);
+  box-shadow: 0 11px 0 #168d8a, 0 16px 28px rgba(77, 245, 210, 0.28);
 }
 
 /* Résultat */
@@ -508,8 +529,8 @@ button:focus-visible {
   gap: 16px;
   margin-top: 30px;
   padding: 20px;
-  background: rgba(82, 211, 164, 0.08);
-  border: 1px solid rgba(82, 211, 164, 0.28);
+  background: rgba(130, 255, 122, 0.08);
+  border: 1px solid rgba(130, 255, 122, 0.35);
   border-radius: var(--radius-medium);
   animation: appear 300ms ease both;
 }
@@ -520,7 +541,7 @@ button:focus-visible {
   width: 38px;
   height: 38px;
   place-items: center;
-  color: #15251e;
+  color: #102010;
   background: var(--success);
   border-radius: 50%;
   font-weight: 900;
@@ -549,14 +570,16 @@ button:focus-visible {
   gap: 12px;
   width: 100%;
   margin-top: 18px;
-  color: #171329;
+  color: #251807;
   background: var(--accent);
   border: 0;
+  box-shadow: 0 8px 0 #b97916, 0 12px 25px rgba(255, 209, 102, 0.16);
 }
 
 .next-round-button:hover {
-  transform: translateY(-2px);
-  background: #ffd17a;
+  transform: translateY(-3px);
+  background: #ffdf86;
+  box-shadow: 0 11px 0 #b97916, 0 16px 28px rgba(255, 209, 102, 0.24);
 }
 
 .next-round-button span {
