@@ -557,5 +557,13 @@ elements.guessSelect.addEventListener("keydown", (event) => {
   }
 });
 
-renderCategoryChoices();
-showCategoryScreen();
+function initializeGame() {
+  renderCategoryChoices();
+  showCategoryScreen();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeGame);
+} else {
+  initializeGame();
+}
